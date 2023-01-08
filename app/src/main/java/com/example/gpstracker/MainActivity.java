@@ -6,6 +6,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +22,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -178,6 +182,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tv_speed.setText("Not Available");
         }
+
+        Geocoder geocoder = new Geocoder(MainActivity.this);
+
+        try {
+            List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            tv_address.setText(addressList.get(0).getAddressLine(0));
+        } catch (Exception e) {
+            tv_address.setText("Unable to fetch street data");
+            e.printStackTrace();
+        }
+
     }
 
 }
