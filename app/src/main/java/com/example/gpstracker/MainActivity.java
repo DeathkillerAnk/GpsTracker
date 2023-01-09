@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,16 +31,23 @@ public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_UPDATE_INTERVAL = 5;
     public static final int FAST_UPDATE_INTERVAL = 30;
     private static final int PERMISSION_FINE_LOCATION = 99;
-    TextView tv_leballat, tv_lat, tv_labellon, tv_lon, tv_labelaltitude, tv_altitude, tv_labelaccuracy, tv_accuracy, tv_labelspeed, tv_speed, tv_labelsensor, tv_sensor, tv_labelupdates, tv_updates, tv_address, tv_lbladdress;
+    TextView tv_leballat, tv_lat, tv_labellon, tv_lon, tv_labelaltitude, tv_altitude, tv_labelaccuracy, tv_accuracy, tv_labelspeed, tv_speed, tv_labelsensor, tv_sensor, tv_labelupdates, tv_updates, tv_address, tv_lbladdress, tv_wayPointCounts;
 
     Switch sw_locationsupdates, sw_gps;
 
+    Button btn_newWayPoint, btn_showWayPointList;
 
     LocationRequest locationRequest;
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
     LocationCallback locationCallback;
+
+    boolean updateOn = false;
+
+    Location currentLocation;
+
+    List<Location> savedLocationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         tv_address = findViewById(R.id.tv_address);
         sw_gps = findViewById(R.id.sw_gps);
         sw_locationsupdates = findViewById(R.id.sw_locationsupdates);
+        btn_newWayPoint = findViewById(R.id.btn_newWayPoint);
+        btn_showWayPointList = findViewById(R.id.btn_showWayPointList);
+        tv_wayPointCounts = findViewById(R.id.tv_countOfCrumbs);
 
 //        if (locationRequest != null)
         locationRequest = new LocationRequest();
@@ -74,6 +85,15 @@ public class MainActivity extends AppCompatActivity {
                 updateUIValues(location);
             }
         };
+
+        btn_newWayPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyApplication myApplication = (MyApplication) getApplicationContext();
+                savedLocationList = myApplication.getMyLocationList();
+                savedLocationList.add(currentLocation);
+            }
+        });
 
         sw_gps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess(Location location) {
 //                    if (location != null)
                         updateUIValues(location);
+                        currentLocation = location;
                 }
             });
         } else {
@@ -193,6 +214,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        MyApplication myApplication = (MyApplication) getApplicationContext();
+        savedLocationList = myApplication.getMyLocationList();
+
+        tv_wayPointCounts.setText(Integer.toString(savedLocationList.size()));
     }
 
 }
