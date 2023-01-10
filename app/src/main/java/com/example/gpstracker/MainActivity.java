@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -31,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_UPDATE_INTERVAL = 5;
     public static final int FAST_UPDATE_INTERVAL = 30;
     private static final int PERMISSION_FINE_LOCATION = 99;
+
     TextView tv_leballat, tv_lat, tv_labellon, tv_lon, tv_labelaltitude, tv_altitude, tv_labelaccuracy, tv_accuracy, tv_labelspeed, tv_speed, tv_labelsensor, tv_sensor, tv_labelupdates, tv_updates, tv_address, tv_lbladdress, tv_wayPointCounts;
 
     Switch sw_locationsupdates, sw_gps;
 
-    Button btn_newWayPoint, btn_showWayPointList;
+    Button btn_newWayPoint, btn_showWayPointList, btn_showMap;
 
     LocationRequest locationRequest;
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         btn_newWayPoint = findViewById(R.id.btn_newWayPoint);
         btn_showWayPointList = findViewById(R.id.btn_showWayPointList);
         tv_wayPointCounts = findViewById(R.id.tv_countOfCrumbs);
+        btn_showMap = findViewById(R.id.btn_showmapp)
 
 //        if (locationRequest != null)
         locationRequest = new LocationRequest();
@@ -95,6 +98,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn_showWayPointList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ShowSaveLocationsList.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_showMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, );
+                startActivity(intent);
+            }
+        });
         sw_gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
