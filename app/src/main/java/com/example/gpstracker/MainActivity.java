@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         btn_newWayPoint = findViewById(R.id.btn_newWayPoint);
         btn_showWayPointList = findViewById(R.id.btn_showWayPointList);
         tv_wayPointCounts = findViewById(R.id.tv_countOfCrumbs);
-        btn_showMap = findViewById(R.id.btn_showmapp)
+        btn_showMap = findViewById(R.id.btn_showmapp);
 
 //        if (locationRequest != null)
         locationRequest = new LocationRequest();
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         btn_showMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, );
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
         });
